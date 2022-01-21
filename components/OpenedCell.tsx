@@ -7,7 +7,7 @@ type OpenedCellProps = {
 const TEXT_COLORS = [
   'text-blue-600',
   'text-green-600',
-  'text-red-600',
+  'text-red-500',
   'text-purple-600',
   'text-orange-600',
   'text-teal-600',

@@ -17,7 +17,7 @@ const ClosedCell = ({ position }: ClosedCellProps) => {
 
   return (
     <button
-      className="h-9 w-9 sm:h-16 sm:w-16 bg-gray-400 border sm:border-2 border-zinc-50 text-lg sm:text-3xl"
+      className="h-9 w-9 sm:h-16 sm:w-16 bg-gray-400 border sm:border-2 border-zinc-50 text-xl sm:text-4xl"
       onClick={() => {
         if (!isFlagged) {
           dispatch(openCell(position));

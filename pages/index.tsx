@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import useInterval from 'use-interval';
 import Board from '../components/Board';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
+import { useGameAlert } from '../hooks/useGameAlert';
 import { initializeBoard } from '../redux/slices/boardSlice';
 import { countTrue } from '../utils/boardUtils';
 
@@ -17,26 +18,29 @@ const Home: NextPage = () => {
   const bombCount = useAppSelector(({ board }) => board.bombCount);
   const flagged = useAppSelector(({ board }) => board.flagged);
   const opened = useAppSelector(({ board }) => board.opened);
+  const { getWinAlert, getLoseAlert } = useGameAlert();
 
   const isRunning = !(isOver || isWon) && countTrue(opened) > 0;
 
   useEffect(() => {
     if (isOver) {
-      window.alert('Game over!');
+      getLoseAlert().then((val) => window.alert(val));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOver]);
 
   useEffect(() => {
     if (isWon) {
-      window.alert('You win!');
+      getWinAlert(time).then((val) => window.alert(val));
     }
-  }, [isWon]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWon, getWinAlert]);
 
   useInterval(
     () => {
       setTime((prev) => prev + 1);
     },
-    isRunning ? 1000 : null
+    isRunning ? 10 : null
   );
 
   return (
@@ -72,7 +76,7 @@ const Home: NextPage = () => {
           <div className="flex bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">
             <p className="text-sm">🕚</p>
             <p className="text-xl sm:text-2xl font-bold">
-              {Math.min(time, 999)}
+              {Math.min(Math.floor(time / 100), 999)}
             </p>
           </div>
         </div>
