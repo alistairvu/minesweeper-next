@@ -1,11 +1,29 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import Board from '../components/Board';
-import { useAppDispatch } from '../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { initializeBoard } from '../redux/slices/boardSlice';
 
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
+
+  const [isOver, isWon] = useAppSelector(({ board }) => [
+    board.isOver,
+    board.isWon,
+  ]);
+
+  useEffect(() => {
+    if (isOver) {
+      window.alert('Game over!');
+    }
+  }, [isOver]);
+
+  useEffect(() => {
+    if (isWon) {
+      window.alert('You win!');
+    }
+  }, [isWon]);
 
   return (
     <div>
@@ -20,8 +38,6 @@ const Home: NextPage = () => {
           MINESWEEPER
         </h1>
 
-        <Board />
-
         <button
           className="my-2 py-2 px-4 bg-gray-200"
           onClick={() => {
@@ -30,6 +46,7 @@ const Home: NextPage = () => {
         >
           Again
         </button>
+        <Board />
       </main>
     </div>
   );

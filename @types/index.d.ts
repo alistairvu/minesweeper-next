@@ -6,4 +6,5 @@ interface BoardState {
   opened: boolean[][];
   boardSize: number;
   bombCount: number;
+  isOver: boolean;
 }

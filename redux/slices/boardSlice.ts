@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { generateLayout } from '../../utils/boardUtils';
+import { countOpened, generateLayout } from '../../utils/boardUtils';
 import findAdjacents from '../../utils/findAdjacent';
 import Queue from '../../utils/Queue';
 
@@ -21,6 +21,9 @@ const initialState: BoardState = {
     boardSize: DEFAULT_BOARD_SIZE,
     bombCount: DEFAULT_BOMB_COUNT,
   }),
+
+  isOver: false,
+  isWon: false,
 };
 
 export const boardSlice = createSlice({
@@ -40,6 +43,9 @@ export const boardSlice = createSlice({
         boardSize: state.boardSize,
         bombCount: state.bombCount,
       });
+
+      state.isOver = false;
+      state.isWon = false;
     },
 
     openCell: (state, action: PayloadAction<Position>) => {
@@ -47,6 +53,11 @@ export const boardSlice = createSlice({
       state.opened[x][y] = true;
 
       const toOpen = new Queue<Position>();
+
+      if (state.layout[x][y] === 9) {
+        state.isOver = true;
+        return;
+      }
 
       if (state.layout[x][y] === 0) {
         toOpen.enqueue([x, y]);
@@ -71,6 +82,12 @@ export const boardSlice = createSlice({
             }
           }
         }
+      }
+
+      const openedCount = countOpened(state.opened);
+
+      if (openedCount + state.bombCount === state.boardSize * state.boardSize) {
+        state.isWon = true;
       }
     },
 
