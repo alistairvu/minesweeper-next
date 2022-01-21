@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           </div>
 
           <button
-            className="my-2 py-2 px-3 bg-gray-200 rounded text-md"
+            className="my-2 py-2 px-3 bg-gray-200 rounded text-md sm:text-2xl"
             onClick={() => {
               dispatch(initializeBoard());
               setTime(0);
