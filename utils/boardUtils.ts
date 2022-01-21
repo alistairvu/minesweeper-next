@@ -36,5 +36,5 @@ export const generateLayout = ({
   return layout;
 };
 
-export const countOpened = (opened: boolean[][]) =>
-  opened.reduce((acc, row) => acc + row.filter((elem) => elem).length, 0);
+export const countTrue = (array: boolean[][]) =>
+  array.reduce((acc, row) => acc + row.filter((elem) => elem).length, 0);

@@ -7,4 +7,5 @@ interface BoardState {
   boardSize: number;
   bombCount: number;
   isOver: boolean;
+  isWon: boolean;
 }

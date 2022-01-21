@@ -6,7 +6,7 @@ const Board: React.FC = () => {
   const range = [...Array(boardSize).keys()];
 
   return (
-    <>
+    <div className="select-none">
       {range.map((row) => (
         <div className="flex" key={row}>
           {range.map((col) => (
@@ -14,7 +14,7 @@ const Board: React.FC = () => {
           ))}
         </div>
       ))}
-    </>
+    </div>
   );
 };
 

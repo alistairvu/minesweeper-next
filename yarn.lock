@@ -2218,6 +2218,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-interval@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/use-interval/-/use-interval-1.4.0.tgz#d0d24a359664373c0ed3f64768c99022a59cfce3"
+  integrity sha512-1betIJun2rXKLxa30AFOBZCeZhsBJoJ/3+gkCeYbJ63lAR//EnAb1NjNeFqzgqeM7zQfR76rrCUaA8DvfgoOpA==
+
 use-long-press@^1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/use-long-press/-/use-long-press-1.1.2.tgz#59135295c14b0a8899e4baf84cf1a36c2f64e18c"

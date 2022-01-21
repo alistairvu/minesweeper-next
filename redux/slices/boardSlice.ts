@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { countOpened, generateLayout } from '../../utils/boardUtils';
+import { countTrue, generateLayout } from '../../utils/boardUtils';
 import findAdjacents from '../../utils/findAdjacent';
 import Queue from '../../utils/Queue';
 
@@ -73,7 +73,10 @@ export const boardSlice = createSlice({
           });
 
           for (let [adjacentX, adjacentY] of adjacents) {
-            if (!state.opened[adjacentX][adjacentY]) {
+            if (
+              !state.opened[adjacentX][adjacentY] &&
+              !state.flagged[adjacentX][adjacentY]
+            ) {
               state.opened[adjacentX][adjacentY] = true;
 
               if (state.layout[adjacentX][adjacentY] === 0) {
@@ -84,7 +87,7 @@ export const boardSlice = createSlice({
         }
       }
 
-      const openedCount = countOpened(state.opened);
+      const openedCount = countTrue(state.opened);
 
       if (openedCount + state.bombCount === state.boardSize * state.boardSize) {
         state.isWon = true;
