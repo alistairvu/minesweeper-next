@@ -34,7 +34,7 @@ const Home: NextPage = () => {
       getWinAlert(time).then((val) => window.alert(val));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isWon, getWinAlert]);
+  }, [isWon]);
 
   useInterval(
     () => {
