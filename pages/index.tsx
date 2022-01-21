@@ -51,27 +51,29 @@ const Home: NextPage = () => {
           MINESWEEPER
         </h1>
 
-        <div className="flex justify-between w-96 py-2">
-          <div className="flex py-2 px-4 bg-gray-200 flex-col justify-center items-center rounded w-24">
-            <p className="text-sm">Remaining</p>
-            <p className="text-2xl font-bold">
+        <div className="flex justify-between w-80 py-2">
+          <div className="flex  bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">
+            <p className="text-sm"> 🚩</p>
+            <p className="text-xl sm:text-2xl font-bold">
               {isWon ? 0 : Math.max(0, bombCount - countTrue(flagged))}
             </p>
           </div>
 
           <button
-            className="my-2 py-2 px-4 bg-gray-200 rounded"
+            className="my-2 py-2 px-3 bg-gray-200 rounded text-md"
             onClick={() => {
               dispatch(initializeBoard());
               setTime(0);
             }}
           >
-            Again
+            {isWon ? <p>🤩 </p> : isOver ? <p>🥴</p> : <p>😊</p>}
           </button>
 
-          <div className="flex py-2 px-4 bg-gray-200 flex-col justify-center items-center rounded w-24">
-            <p className="text-sm">Time</p>
-            <p className="text-2xl font-bold">{Math.min(time, 999)}</p>
+          <div className="flex bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">
+            <p className="text-sm">🕚</p>
+            <p className="text-xl sm:text-2xl font-bold">
+              {Math.min(time, 999)}
+            </p>
           </div>
         </div>
         <Board />
