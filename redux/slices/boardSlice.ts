@@ -30,23 +30,13 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
-    initializeBoard: (state) => {
-      state.flagged = new Array(state.boardSize)
-        .fill(0)
-        .map(() => new Array(state.boardSize).fill(false));
-
-      state.opened = new Array(state.boardSize)
-        .fill(0)
-        .map(() => new Array(state.boardSize).fill(false));
-
-      state.layout = generateLayout({
+    initializeBoard: (state) => ({
+      ...initialState,
+      layout: generateLayout({
         boardSize: state.boardSize,
         bombCount: state.bombCount,
-      });
-
-      state.isOver = false;
-      state.isWon = false;
-    },
+      }),
+    }),
 
     openCell: (state, action: PayloadAction<Position>) => {
       const [y, x] = action.payload;
