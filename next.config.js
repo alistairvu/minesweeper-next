@@ -9,17 +9,6 @@ const nextConfig = withPWA({
     disable: process.env.NODE_ENV === 'development',
   },
   reactStrictMode: true,
-
-  async redirects() {
-    return [
-      {
-        source: '/:path(.{1,})',
-        destination: '/',
-        permanent: true,
-        basePath: false,
-      },
-    ];
-  },
 });
 
 module.exports = nextConfig;
