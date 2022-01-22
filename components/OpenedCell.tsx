@@ -34,7 +34,7 @@ const OpenedCell: React.FC<OpenedCellProps> = ({ position }) => {
       return <p>💣</p>;
     }
 
-    if (isOver && isFlagged && content !== 9) {
+    if (isOver && isFlagged) {
       return <p>❌</p>;
     }
 
