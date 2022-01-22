@@ -50,47 +50,53 @@ export const boardSlice = createSlice({
 
     openCell: (state, action: PayloadAction<Position>) => {
       const [x, y] = action.payload;
-      state.opened[x][y] = true;
 
-      const toOpen = new Queue<Position>();
+      if (!state.isOver && !state.isWon && !state.flagged[x][y]) {
+        state.opened[x][y] = true;
 
-      if (state.layout[x][y] === 9) {
-        state.isOver = true;
-        return;
-      }
+        const toOpen = new Queue<Position>();
 
-      if (state.layout[x][y] === 0) {
-        toOpen.enqueue([x, y]);
-      }
+        if (state.layout[x][y] === 9) {
+          state.isOver = true;
+          return;
+        }
 
-      while (!toOpen.isEmpty()) {
-        const current = toOpen.dequeue();
+        if (state.layout[x][y] === 0) {
+          toOpen.enqueue([x, y]);
+        }
 
-        if (current) {
-          const adjacents = findAdjacents({
-            boardSize: state.boardSize,
-            point: current,
-          });
+        while (!toOpen.isEmpty()) {
+          const current = toOpen.dequeue();
 
-          for (let [adjacentX, adjacentY] of adjacents) {
-            if (
-              !state.opened[adjacentX][adjacentY] &&
-              !state.flagged[adjacentX][adjacentY]
-            ) {
-              state.opened[adjacentX][adjacentY] = true;
+          if (current) {
+            const adjacents = findAdjacents({
+              boardSize: state.boardSize,
+              point: current,
+            });
 
-              if (state.layout[adjacentX][adjacentY] === 0) {
-                toOpen.enqueue([adjacentX, adjacentY]);
+            for (let [adjacentX, adjacentY] of adjacents) {
+              if (
+                !state.opened[adjacentX][adjacentY] &&
+                !state.flagged[adjacentX][adjacentY]
+              ) {
+                state.opened[adjacentX][adjacentY] = true;
+
+                if (state.layout[adjacentX][adjacentY] === 0) {
+                  toOpen.enqueue([adjacentX, adjacentY]);
+                }
               }
             }
           }
         }
-      }
 
-      const openedCount = countTrue(state.opened);
+        const openedCount = countTrue(state.opened);
 
-      if (openedCount + state.bombCount === state.boardSize * state.boardSize) {
-        state.isWon = true;
+        if (
+          openedCount + state.bombCount ===
+          state.boardSize * state.boardSize
+        ) {
+          state.isWon = true;
+        }
       }
     },
 

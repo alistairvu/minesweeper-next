@@ -19,9 +19,7 @@ const ClosedCell = ({ position }: ClosedCellProps) => {
     <button
       className="h-9 w-9 sm:h-16 sm:w-16 bg-gray-400 border sm:border-2 border-zinc-50 text-xl sm:text-4xl"
       onClick={() => {
-        if (!isFlagged) {
-          dispatch(openCell(position));
-        }
+        dispatch(openCell(position));
       }}
       onContextMenu={(e) => {
         e.preventDefault();
