@@ -1,12 +1,12 @@
+import { useLongPress } from 'use-long-press';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import { openCell, toggleFlagCell } from '../redux/slices/boardSlice';
-import { useLongPress } from 'use-long-press';
 
 type ClosedCellProps = {
   position: Position;
 };
 
-const ClosedCell = ({ position }: ClosedCellProps) => {
+const ClosedCell: React.FC<ClosedCellProps> = ({ position }) => {
   const dispatch = useAppDispatch();
   const [y, x] = position;
   const isFlagged = useAppSelector(({ board }) => board.flagged[y][x]);
@@ -25,6 +25,7 @@ const ClosedCell = ({ position }: ClosedCellProps) => {
         e.preventDefault();
         dispatch(toggleFlagCell(position));
       }}
+      type="button"
       {...handleLongPress}
     >
       {isFlagged && <p>🚩</p>}

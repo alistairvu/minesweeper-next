@@ -1,10 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-alert */
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import useInterval from 'use-interval';
 import Board from '../components/Board';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
-import { useGameAlert } from '../hooks/useGameAlert';
+import useGameAlert from '../hooks/useGameAlert';
 import { initializeBoard } from '../redux/slices/boardSlice';
 import { countTrue } from '../utils/boardUtils';
 
@@ -26,14 +28,12 @@ const Home: NextPage = () => {
     if (isOver) {
       getLoseAlert().then((val) => window.alert(val));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOver]);
 
   useEffect(() => {
     if (isWon) {
       getWinAlert(time).then((val) => window.alert(val));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isWon]);
 
   useInterval(
@@ -42,6 +42,18 @@ const Home: NextPage = () => {
     },
     isRunning ? 10 : null
   );
+
+  const buttonText = () => {
+    if (isWon) {
+      return <p>🤩</p>;
+    }
+
+    if (isOver) {
+      return <p>🥴</p>;
+    }
+
+    return <p>😊</p>;
+  };
 
   return (
     <div>
@@ -72,8 +84,9 @@ const Home: NextPage = () => {
               dispatch(initializeBoard());
               setTime(0);
             }}
+            type="button"
           >
-            {isWon ? <p>🤩 </p> : isOver ? <p>🥴</p> : <p>😊</p>}
+            {buttonText()}
           </button>
 
           <div className="flex bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">

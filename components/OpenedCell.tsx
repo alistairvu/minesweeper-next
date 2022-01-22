@@ -15,7 +15,7 @@ const TEXT_COLORS = [
   'text-zinc-600',
 ];
 
-const OpenedCell = ({ position }: OpenedCellProps) => {
+const OpenedCell: React.FC<OpenedCellProps> = ({ position }) => {
   const [y, x] = position;
   const content = useAppSelector(({ board }) => board.layout[y][x]);
   const isOpened = useAppSelector(({ board }) => board.opened[y][x]);
@@ -32,7 +32,7 @@ const OpenedCell = ({ position }: OpenedCellProps) => {
     }
 
     if (isOver && isFlagged && content !== 9) {
-      return <p>❌ </p>;
+      return <p>❌</p>;
     }
 
     return <p>{content}</p>;

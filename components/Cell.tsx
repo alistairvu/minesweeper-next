@@ -2,7 +2,11 @@ import { useAppSelector } from '../hooks/redux';
 import ClosedCell from './ClosedCell';
 import OpenedCell from './OpenedCell';
 
-const Cell: React.FC<{ position: Position }> = ({ position }) => {
+type CellProps = {
+  position: Position;
+};
+
+const Cell: React.FC<CellProps> = ({ position }) => {
   const [y, x] = position;
 
   const isOpened = useAppSelector(({ board }) => board.opened[y][x]);

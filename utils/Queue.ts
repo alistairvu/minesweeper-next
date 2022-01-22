@@ -2,7 +2,7 @@ export default class Queue<T> {
   elements: Array<T>;
 
   constructor() {
-    this.elements = new Array<T>();
+    this.elements = [];
   }
 
   enqueue = (value: T): void => {

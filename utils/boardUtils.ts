@@ -21,15 +21,15 @@ export const generateLayout = ({
       layout[x][y] = 9;
 
       const adjacents = findAdjacents({
-        boardSize: boardSize,
+        boardSize,
         point: [x, y],
       });
 
-      for (let [cellX, cellY] of adjacents) {
+      adjacents.forEach(([cellX, cellY]) => {
         layout[cellX][cellY] = Math.min(9, layout[cellX][cellY] + 1);
-      }
+      });
 
-      generatedBombs++;
+      generatedBombs += 1;
     }
   }
 

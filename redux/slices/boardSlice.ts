@@ -74,7 +74,7 @@ export const boardSlice = createSlice({
               point: current,
             });
 
-            for (let [adjacentY, adjacentX] of adjacents) {
+            adjacents.forEach(([adjacentY, adjacentX]) => {
               if (
                 !state.opened[adjacentY][adjacentX] &&
                 !state.flagged[adjacentY][adjacentX]
@@ -85,7 +85,7 @@ export const boardSlice = createSlice({
                   toOpen.enqueue([adjacentY, adjacentX]);
                 }
               }
-            }
+            });
           }
         }
 
