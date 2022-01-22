@@ -20,9 +20,8 @@ Win percentage: ${winPercentage.toFixed(2)}% (${wins + 1} out of ${total + 1})
 ${
   bestTime > time
     ? `NEW BEST TIME: ${time / 100} ${time === 100 ? 'second' : 'seconds'}`
-    : `Time: ${time / 100}\nBest time: ${bestTime / 100} ${
-        time === 100 ? 'second' : 'seconds'
-      }`
+    : `Time: ${time / 100} ${time === 100 ? 'second' : 'seconds'}
+Best time: ${bestTime / 100} ${time === 100 ? 'second' : 'seconds'}`
 }`;
   };
 
