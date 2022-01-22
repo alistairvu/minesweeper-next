@@ -3,12 +3,12 @@ import ClosedCell from './ClosedCell';
 import OpenedCell from './OpenedCell';
 
 const Cell: React.FC<{ position: Position }> = ({ position }) => {
-  const [x, y] = position;
+  const [y, x] = position;
 
-  const isOpened = useAppSelector(({ board }) => board.opened[x][y]);
-  const isFlagged = useAppSelector(({ board }) => board.flagged[x][y]);
+  const isOpened = useAppSelector(({ board }) => board.opened[y][x]);
+  const isFlagged = useAppSelector(({ board }) => board.flagged[y][x]);
   const isOver = useAppSelector(({ board }) => board.isOver);
-  const content = useAppSelector(({ board }) => board.layout[x][y]);
+  const content = useAppSelector(({ board }) => board.layout[y][x]);
   const isWon = useAppSelector(({ board }) => board.isWon);
 
   const isOpenRendered =

@@ -16,10 +16,10 @@ const TEXT_COLORS = [
 ];
 
 const OpenedCell = ({ position }: OpenedCellProps) => {
-  const [x, y] = position;
-  const content = useAppSelector(({ board }) => board.layout[x][y]);
-  const isOpened = useAppSelector(({ board }) => board.opened[x][y]);
-  const isFlagged = useAppSelector(({ board }) => board.flagged[x][y]);
+  const [y, x] = position;
+  const content = useAppSelector(({ board }) => board.layout[y][x]);
+  const isOpened = useAppSelector(({ board }) => board.opened[y][x]);
+  const isFlagged = useAppSelector(({ board }) => board.flagged[y][x]);
   const isOver = useAppSelector(({ board }) => board.isOver);
 
   const getCellContent = () => {

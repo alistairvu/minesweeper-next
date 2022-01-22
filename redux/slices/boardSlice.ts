@@ -49,20 +49,20 @@ export const boardSlice = createSlice({
     },
 
     openCell: (state, action: PayloadAction<Position>) => {
-      const [x, y] = action.payload;
+      const [y, x] = action.payload;
 
-      if (!state.isOver && !state.isWon && !state.flagged[x][y]) {
-        state.opened[x][y] = true;
+      if (!state.isOver && !state.isWon && !state.flagged[y][x]) {
+        state.opened[y][x] = true;
 
         const toOpen = new Queue<Position>();
 
-        if (state.layout[x][y] === 9) {
+        if (state.layout[y][x] === 9) {
           state.isOver = true;
           return;
         }
 
-        if (state.layout[x][y] === 0) {
-          toOpen.enqueue([x, y]);
+        if (state.layout[y][x] === 0) {
+          toOpen.enqueue([y, x]);
         }
 
         while (!toOpen.isEmpty()) {
@@ -74,15 +74,15 @@ export const boardSlice = createSlice({
               point: current,
             });
 
-            for (let [adjacentX, adjacentY] of adjacents) {
+            for (let [adjacentY, adjacentX] of adjacents) {
               if (
-                !state.opened[adjacentX][adjacentY] &&
-                !state.flagged[adjacentX][adjacentY]
+                !state.opened[adjacentY][adjacentX] &&
+                !state.flagged[adjacentY][adjacentX]
               ) {
-                state.opened[adjacentX][adjacentY] = true;
+                state.opened[adjacentY][adjacentX] = true;
 
-                if (state.layout[adjacentX][adjacentY] === 0) {
-                  toOpen.enqueue([adjacentX, adjacentY]);
+                if (state.layout[adjacentY][adjacentX] === 0) {
+                  toOpen.enqueue([adjacentY, adjacentX]);
                 }
               }
             }
@@ -101,9 +101,9 @@ export const boardSlice = createSlice({
     },
 
     toggleFlagCell: (state, action: PayloadAction<Position>) => {
-      const [x, y] = action.payload;
-      const prev = state.flagged[x][y];
-      state.flagged[x][y] = !prev;
+      const [y, x] = action.payload;
+      const prev = state.flagged[y][x];
+      state.flagged[y][x] = !prev;
     },
   },
 });

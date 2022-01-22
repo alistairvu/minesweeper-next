@@ -8,8 +8,8 @@ type ClosedCellProps = {
 
 const ClosedCell = ({ position }: ClosedCellProps) => {
   const dispatch = useAppDispatch();
-  const [x, y] = position;
-  const isFlagged = useAppSelector(({ board }) => board.flagged[x][y]);
+  const [y, x] = position;
+  const isFlagged = useAppSelector(({ board }) => board.flagged[y][x]);
 
   const handleLongPress = useLongPress(() => {
     dispatch(toggleFlagCell(position));
