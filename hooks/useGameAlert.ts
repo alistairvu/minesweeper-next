@@ -1,4 +1,4 @@
-import { set, get } from 'idb-keyval';
+import { get } from 'idb-keyval';
 
 const useGameAlert = () => {
   const getWinAlert = async (time: number) => {
@@ -6,21 +6,21 @@ const useGameAlert = () => {
     const total = await get('total').then((value) => value || 0);
     const winPercentage = ((wins + 1) / (total + 1)) * 100;
 
-    await set('win', wins + 1);
-    await set('total', total + 1);
+    const bestTime = await get('bestTime')
+      .then((value) => value || 99999)
+      .then((value) => Math.min(value, time));
 
-    const bestTime = await get('bestTime').then((value) => value || 99999);
-    await set('bestTime', Math.min(bestTime, time));
-
-    return `Congrats, you won!
+    const message = `Congrats, you won!
 Win percentage: ${winPercentage.toFixed(2)}% (${wins + 1} out of ${total + 1})
 ==========
 ${
-  bestTime > time
+  bestTime === time
     ? `NEW BEST TIME: ${time / 100} ${time === 100 ? 'second' : 'seconds'}`
     : `Time: ${time / 100} ${time === 100 ? 'second' : 'seconds'}
 Best time: ${bestTime / 100} ${time === 100 ? 'second' : 'seconds'}`
 }`;
+
+    return { wins, total, bestTime, message };
   };
 
   const getLoseAlert = async () => {
@@ -28,10 +28,10 @@ Best time: ${bestTime / 100} ${time === 100 ? 'second' : 'seconds'}`
     const total = await get('total').then((value) => value || 0);
     const winPercentage = (wins / (total + 1)) * 100;
 
-    await set('total', total + 1);
-
-    return `You lost!
+    const message = `You lost!
 Win percentage: ${winPercentage.toFixed(2)}% (${wins} out of ${total + 1})`;
+
+    return { total, message };
   };
 
   return { getWinAlert, getLoseAlert };

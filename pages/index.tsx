@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import useInterval from 'use-interval';
+import { set } from 'idb-keyval';
 import Board from '../components/Board';
 import ResultsAlert from '../components/ResultsAlert';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
@@ -29,7 +30,10 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (isOver) {
       getLoseAlert()
-        .then((val) => setAlertText(val))
+        .then(async ({ message, total }) => {
+          await set('total', total + 1);
+          setAlertText(message);
+        })
         .then(() => setIsAlert(true));
     }
   }, [isOver]);
@@ -37,7 +41,12 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (isWon) {
       getWinAlert(time)
-        .then((val) => setAlertText(val))
+        .then(async ({ message, wins, total, bestTime }) => {
+          await set('win', wins + 1);
+          await set('total', total + 1);
+          await set('bestTime', bestTime);
+          setAlertText(message);
+        })
         .then(() => setIsAlert(true));
     }
   }, [isWon]);
