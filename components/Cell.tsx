@@ -16,10 +16,7 @@ const Cell: React.FC<CellProps> = ({ position }) => {
   const isWon = useAppSelector(({ board }) => board.isWon);
 
   const isOpenRendered =
-    isOpened ||
-    (isOver && content === 9 && !isFlagged) ||
-    (isOver && content !== 9 && isFlagged) ||
-    isWon;
+    isOpened || (isOver && content === 9) || (isOver && isFlagged) || isWon;
 
   return isOpenRendered ? (
     <OpenedCell position={position} />
