@@ -42,9 +42,11 @@ const Home: NextPage = () => {
     if (isWon) {
       getWinAlert(time)
         .then(async ({ message, wins, total, bestTime }) => {
-          await set('win', wins + 1);
-          await set('total', total + 1);
-          await set('bestTime', bestTime);
+          await Promise.all([
+            set('win', wins + 1),
+            set('total', total + 1),
+            set('bestTime', bestTime),
+          ]);
           setAlertText(message);
         })
         .then(() => setIsAlert(true));
