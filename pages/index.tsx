@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-alert */
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import useInterval from 'use-interval';
 import Board from '../components/Board';
+import ResultsAlert from '../components/ResultsAlert';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
 import useGameAlert from '../hooks/useGameAlert';
 import { initializeBoard } from '../redux/slices/boardSlice';
@@ -12,6 +12,8 @@ import { countTrue } from '../utils/boardUtils';
 
 const Home: NextPage = () => {
   const [time, setTime] = useState(0);
+  const [alertText, setAlertText] = useState('');
+  const [isAlert, setIsAlert] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -26,13 +28,17 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (isOver) {
-      getLoseAlert().then((val) => window.alert(val));
+      getLoseAlert()
+        .then((val) => setAlertText(val))
+        .then(() => setIsAlert(true));
     }
   }, [isOver]);
 
   useEffect(() => {
     if (isWon) {
-      getWinAlert(time).then((val) => window.alert(val));
+      getWinAlert(time)
+        .then((val) => setAlertText(val))
+        .then(() => setIsAlert(true));
     }
   }, [isWon]);
 
@@ -65,21 +71,28 @@ const Home: NextPage = () => {
         />
       </Head>
 
-      <main className="h-screen w-screen flex items-center justify-center flex-col">
-        <h1 className="font-extrabold text-3xl sm:text-4xl py-2">
+      <ResultsAlert
+        isAlert={isAlert}
+        setIsAlert={setIsAlert}
+        alertText={alertText}
+        variant={isWon ? 'win' : 'lose'}
+      />
+
+      <main className="flex flex-col items-center justify-center w-screen h-screen">
+        <h1 className="py-2 text-3xl font-extrabold sm:text-4xl">
           MINESWEEPER
         </h1>
 
-        <div className="flex justify-between w-80 py-2">
-          <div className="flex  bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">
+        <div className="flex justify-between py-2 w-80">
+          <div className="flex flex-col items-center justify-center w-16 bg-gray-200 rounded sm:w-24">
             <p className="text-sm"> 🚩</p>
-            <p className="text-xl sm:text-2xl font-bold">
+            <p className="text-xl font-bold sm:text-2xl">
               {isWon ? 0 : Math.max(0, bombCount - countTrue(flagged))}
             </p>
           </div>
 
           <button
-            className="my-2 py-2 px-3 bg-gray-200 rounded text-md sm:text-2xl cursor-pointer"
+            className="px-3 py-2 my-2 bg-gray-200 rounded cursor-pointer text-md sm:text-2xl"
             onClick={() => {
               dispatch(initializeBoard());
               setTime(0);
@@ -89,9 +102,9 @@ const Home: NextPage = () => {
             {buttonText()}
           </button>
 
-          <div className="flex bg-gray-200 flex-col justify-center items-center rounded w-16 sm:w-24">
+          <div className="flex flex-col items-center justify-center w-16 bg-gray-200 rounded sm:w-24">
             <p className="text-sm">🕚</p>
-            <p className="text-xl sm:text-2xl font-bold">
+            <p className="text-xl font-bold sm:text-2xl">
               {Math.min(Math.floor(time / 100), 999)}
             </p>
           </div>
