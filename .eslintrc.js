@@ -17,7 +17,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['react', '@typescript-eslint'],
+  plugins: ['react', 'prettier', '@typescript-eslint'],
   rules: {
     'react/jsx-filename-extension': ['error', { extensions: ['.tsx', '.jsx'] }],
     'react/function-component-definition': [
@@ -42,5 +42,6 @@ module.exports = {
       },
     ],
     'no-undef': 'off',
+    'prettier/prettier': 'error',
   },
 };

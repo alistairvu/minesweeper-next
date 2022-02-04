@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useEffect, useState } from 'react';
 import useInterval from 'use-interval';
-import { set } from 'idb-keyval';
+import localforage from 'localforage';
 import Board from '../components/Board';
 import ResultsAlert from '../components/ResultsAlert';
 import { useAppDispatch, useAppSelector } from '../hooks/redux';
@@ -31,7 +31,7 @@ const Home: NextPage = () => {
     if (isOver) {
       getLoseAlert()
         .then(async ({ message, total }) => {
-          await set('total', total + 1);
+          await localforage.setItem('total', total + 1);
           setAlertText(message);
         })
         .then(() => setIsAlert(true));
@@ -43,9 +43,9 @@ const Home: NextPage = () => {
       getWinAlert(time)
         .then(async ({ message, wins, total, bestTime }) => {
           await Promise.all([
-            set('win', wins + 1),
-            set('total', total + 1),
-            set('bestTime', bestTime),
+            localforage.setItem('wins', wins + 1),
+            localforage.setItem('total', total + 1),
+            localforage.setItem('bestTime', bestTime),
           ]);
           setAlertText(message);
         })
